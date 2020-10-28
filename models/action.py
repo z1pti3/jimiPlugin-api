@@ -52,6 +52,6 @@ class _api(action._action):
 
 		actionResult["result"] = True
 		actionResult["rc"] = response.status_code
-		actionResult["data"] = { "headers" : response.headers, "text" : response.text }
+		actionResult["data"] = { "headers" : dict(response.headers), "text" : response.text }
 		return actionResult
 
