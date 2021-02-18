@@ -13,6 +13,7 @@ class _api(action._action):
 	cookies = dict()
 	timeout = int()
 	proxy = dict()
+	returnsJson = bool()
 
 	def __init__(self):
 		pass
@@ -50,8 +51,15 @@ class _api(action._action):
 		elif method == "DELETE":
 			response = requests.delete(url,**kwargs)
 
+		text = response.text
+		if self.returnsJson:
+			try:
+				text = response.json()
+			except:
+				text = response.text		
+
 		actionResult["result"] = True
 		actionResult["rc"] = response.status_code
-		actionResult["data"] = { "headers" : dict(response.headers), "text" : response.text }
+		actionResult["data"] = { "headers" : dict(response.headers), "text" : text }
 		return actionResult
 
