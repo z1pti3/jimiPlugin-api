@@ -30,7 +30,7 @@ class _api(action._action):
 		else:
 			kwargs["timeout"] = self.timeout
 		if self.ca:
-			kwargs["verify"] == Path(self.ca)
+			kwargs["verify"] = Path(self.ca)
 		if self.proxy:
 			kwargs["proxies"] = self.proxy
 		else:
