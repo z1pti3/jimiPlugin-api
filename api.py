@@ -1,7 +1,7 @@
 from core import plugin, model
 
 class _api(plugin._plugin):
-    version = 0.1
+    version = 1.0
 
     def install(self):
         # Register models

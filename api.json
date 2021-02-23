@@ -1,0 +1,71 @@
+{
+    "name" : "api",
+    "author" : "z1p",
+    "version" : 1.0,
+    "categories" : ["web"],
+    "description" : "Execute any web API calls with te API plugin.",
+    "icon" : null,
+    "requirements" : {
+        "jimi_min_version" : null,
+        "jimi_max_version" : null,
+        "plugins" : []
+    },
+    "collections" : {
+
+    },
+    "triggers" : {
+        
+    },
+    "actions" : {
+        "api" : {
+            "display_name" : "api",
+            "className" : "_api",
+            "class_location" : "models.action",
+            "description" : "Makes a call to a web API and returns the resulting response status code and text.",
+            "fields" : [
+                { "schema_item" : "url", "schema_value" : "url", "type" : "input", "label" : "url", "description" : "URL to make the request to.", "required" : true, "jimi_syntax" : true },
+                { "schema_item" : "method", "schema_value" : "method", "type" : "input", "label" : "method", "description" : "Defines the HTTP method to use GET|POST|PUT|DELETE.", "required" : true, "jimi_syntax" : true },
+                { "schema_item" : "headers", "schema_value" : "headers", "type" : "json-input", "label" : "headers", "description" : "A json value containing the headers to include in the request.", "required" : false, "jimi_syntax" : true },
+                { "schema_item" : "cookies", "schema_value" : "cookies", "type" : "json-input", "label" : "cookies", "description" : "A json value containing the cookies to include.", "required" : false, "jimi_syntax" : true },
+                { "schema_item" : "postData", "schema_value" : "postData", "type" : "json-input", "label" : "postData", "description" : "Any data to include within the body of the request.", "required" : false, "jimi_syntax" : true },
+                { "schema_item" : "ca", "schema_value" : "ca", "type" : "input", "label" : "ca", "description" : "Path to the CA pem file to validate a HTTPS request.", "required" : false, "jimi_syntax" : false },
+                { "schema_item" : "proxy", "schema_value" : "proxy", "type" : "json-input", "label" : "proxy", "description" : "A json value containing the proxy server to use. i.e. { \"http\" : null, \"https\" : null }.", "required" : false, "jimi_syntax" : false },
+                { "schema_item" : "timeout", "schema_value" : "timeout", "type" : "input", "label" : "timeout", "description" : "Sets the timeout for the request in seconds. If set to 0 then a default of 5 seconds is used.", "required" : false, "jimi_syntax" : false }
+            ],
+            "data_out" : {
+                "result" : { 
+                    "description" : "Returns True.",
+                    "type" : "boolean",
+                    "always_present" : true,
+                    "values" : {
+                        "True" : { "description" : "Returns True." },
+                    }
+                },
+                "rc" : {
+                    "description" : "Returns the exit code based on the status code provided by the remote web server.",
+                    "type" : "number",
+                    "always_present" : true,
+                    "values" : {
+                    }
+                },
+                "data.headers" : {
+                    "description" : "Response headers.",
+                    "type" : "json",
+                    "always_present" : true,
+                    "values" : {
+                    }
+                },
+                "data.text" : {
+                    "description" : "Response body.",
+                    "type" : "string",
+                    "always_present" : true,
+                    "values" : {
+                    }
+                }
+            }
+        }
+    },
+    "settings" : {
+
+    }
+}
