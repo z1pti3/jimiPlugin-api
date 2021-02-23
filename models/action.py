@@ -13,6 +13,7 @@ class _api(action._action):
 	cookies = dict()
 	timeout = int()
 	proxy = dict()
+	returnsJson = bool()
 
 	def __init__(self):
 		pass
@@ -30,7 +31,7 @@ class _api(action._action):
 		else:
 			kwargs["timeout"] = self.timeout
 		if self.ca:
-			kwargs["verify"] == Path(self.ca)
+			kwargs["verify"] = Path(self.ca)
 		if self.proxy:
 			kwargs["proxies"] = self.proxy
 		else:
@@ -39,19 +40,32 @@ class _api(action._action):
 			cookies = helpers.evalDict(self.cookies,{"data" : data})
 			kwargs["cookies"] = cookies
 
-		if method == "GET":
-			response = requests.get(url,**kwargs)
-		elif method == "POST":
-			kwargs["data"] = postData
-			response = requests.post(url,**kwargs)
-		elif method == "PUT":
-			kwargs["data"] = postData
-			response = requests.put(url,**kwargs)
-		elif method == "DELETE":
-			response = requests.delete(url,**kwargs)
+		try:
+			if method == "GET":
+				response = requests.get(url,**kwargs)
+			elif method == "POST":
+				kwargs["data"] = postData
+				response = requests.post(url,**kwargs)
+			elif method == "PUT":
+				kwargs["data"] = postData
+				response = requests.put(url,**kwargs)
+			elif method == "DELETE":
+				response = requests.delete(url,**kwargs)
 
-		actionResult["result"] = True
-		actionResult["rc"] = response.status_code
-		actionResult["data"] = { "headers" : response.headers, "text" : response.text }
+			text = response.text
+			if self.returnsJson:
+				try:
+					text = response.json()
+				except:
+					text = response.text		
+
+			actionResult["result"] = True
+			actionResult["rc"] = response.status_code
+			actionResult["data"] = { "headers" : dict(response.headers), "text" : text }
+		
+		except:
+			actionResult["result"] = False
+			actionResult["rc"] = 404
+
 		return actionResult
 
