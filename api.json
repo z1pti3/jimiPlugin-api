@@ -38,7 +38,7 @@
                     "type" : "boolean",
                     "always_present" : true,
                     "values" : {
-                        "True" : { "description" : "Returns True." },
+                        "True" : { "description" : "Returns True." }
                     }
                 },
                 "rc" : {
