@@ -15,9 +15,6 @@ class _api(action._action):
 	proxy = dict()
 	returnsJson = bool()
 
-	def __init__(self):
-		pass
-
 	def run(self,data,persistentData,actionResult):
 		headers = helpers.evalDict(self.headers,{"data" : data})
 		url = helpers.evalString(self.url,{"data" : data})
