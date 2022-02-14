@@ -15,6 +15,9 @@ class _api(action._action):
 	proxy = dict()
 	returnsJson = bool()
 
+	def __init__(self):
+		pass
+
 	def run(self,data,persistentData,actionResult):
 		headers = helpers.evalDict(self.headers,{"data" : data})
 		url = helpers.evalString(self.url,{"data" : data})
@@ -60,7 +63,8 @@ class _api(action._action):
 			actionResult["rc"] = response.status_code
 			actionResult["data"] = { "headers" : dict(response.headers), "text" : text }
 		
-		except:
+		except Exception as e:
+			actionResult["data"] = str(e)
 			actionResult["result"] = False
 			actionResult["rc"] = 404
 
